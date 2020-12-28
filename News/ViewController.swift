@@ -46,6 +46,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         getData(source: defURL)
     }
     @objc func refresh(_ sender: AnyObject) {
+        datas.removeAll()
+        tableView.reloadData()
         if defURL == "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"{
             getCorona()
             getHack(source: defURL)
@@ -115,8 +117,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }.resume()
     }
     func getHack(source: String){
-        hud.show(in: self.view)
         hud.textLabel.text = "Loading"
+        hud.show(in: self.view)
 //        let source = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
         let url = URL(string: source)!
         let session = URLSession(configuration: .default)
@@ -194,7 +196,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         vc.myURL = item
         vc.navigationItem.largeTitleDisplayMode = .never
-//        present(vc, animated: true, completion: nil)
+        //present(vc, animated: true, completion: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -252,7 +254,6 @@ extension ViewController: UISearchBarDelegate {
                 print(error)
             } else {
                 let json = try! JSON(data: data!)
-                print(json)
                 for i in json[]{
                     DispatchQueue.main.async {
                         self.label.text = "COVID-19 Confirmed- \(i.1["confirmed"])/ Deaths- \(i.1["deaths"])/ Recovered- \(i.1["recovered"])"
