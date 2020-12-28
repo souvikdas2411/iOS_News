@@ -25,13 +25,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var label: UILabel!
     private var hasFetched = false
     let hud = JGProgressHUD()
     var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         tableView.addSubview(refreshControl) // not required when using UITableViewController
@@ -40,13 +41,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
+        getCorona()
         defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
         getData(source: defURL)
     }
     @objc func refresh(_ sender: AnyObject) {
         if defURL == "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"{
+            getCorona()
             getHack(source: defURL)
         }
+        getCorona()
         getData(source: defURL)
         
     }
@@ -102,10 +106,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self.tableView.delegate = self
                     self.tableView.dataSource = self
                     self.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
 //                    self.tableView.isHidden = false
                 }
             }
-            self.refreshControl.endRefreshing()
+            
             
         }.resume()
     }
@@ -142,11 +147,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.tableView.delegate = self
                         self.tableView.dataSource = self
                         self.tableView.reloadData()
+                        self.refreshControl.endRefreshing()
                     }
                     
                 }.resume()
             }
-            self.refreshControl.endRefreshing()
+            
             self.hud.dismiss()
         }.resume()
     }
@@ -209,7 +215,7 @@ extension ViewController: UISearchBarDelegate {
     
     func searchUsers(query: String) {
         for i in datas{
-            if i.title.contains(query) || i.desc.contains(query){
+            if i.title.lowercased().contains(query.lowercased()) || i.desc.lowercased().contains(query.lowercased()){
                 results.append(dataType(id: i.id, title: i.title, desc: i.desc, url: i.url, image: i.image))
                 hasFetched = true
                 tableView.reloadData()
@@ -227,6 +233,36 @@ extension ViewController: UISearchBarDelegate {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds){
             alert.dismiss(animated: true, completion: nil)
         }
+    }
+    func getCorona(){
+        let headers = [
+            "x-rapidapi-key": "cb3b31426dmsh9e8f5509ac874dep19234cjsn368eafc7208f",
+            "x-rapidapi-host": "covid-19-data.p.rapidapi.com"
+        ]
+
+        let request = NSMutableURLRequest(url: NSURL(string: "https://covid-19-data.p.rapidapi.com/totals")! as URL,
+                                                cachePolicy: .useProtocolCachePolicy,
+                                            timeoutInterval: 10.0)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+            } else {
+                let json = try! JSON(data: data!)
+                print(json)
+                for i in json[]{
+                    DispatchQueue.main.async {
+                        self.label.text = "COVID-19 Confirmed- \(i.1["confirmed"])/ Deaths- \(i.1["deaths"])/ Recovered- \(i.1["recovered"])"
+                    }
+                }
+                
+            }
+        })
+
+        dataTask.resume()
     }
 }
 

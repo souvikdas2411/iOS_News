@@ -17,11 +17,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search keywords " translatesAutoresizingMaskIntoConstraints="NO" id="TzI-6w-naT">
-                                <rect key="frame" x="0.0" y="140" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="160.5" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e2z-6H-V25">
-                                <rect key="frame" x="0.0" y="201" width="414" height="695"/>
+                                <rect key="frame" x="0.0" y="221.5" width="414" height="674.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="ivJ-Ti-kpo" detailTextLabel="4pN-zZ-fWy" imageView="mcu-Te-cZp" style="IBUITableViewCellStyleSubtitle" id="HzI-A8-nP2">
@@ -54,17 +54,34 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COVID-19 Confirmed/Deaths/Recovered" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XRx-Zl-TQ8">
+                                <rect key="frame" x="0.0" y="140" width="414" height="20.5"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" systemColor="systemRedColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="e2z-6H-V25" firstAttribute="top" secondItem="TzI-6w-naT" secondAttribute="bottom" constant="5" id="2Qb-e0-LPv"/>
-                            <constraint firstItem="e2z-6H-V25" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="6bV-UC-QYC"/>
-                            <constraint firstAttribute="bottom" secondItem="e2z-6H-V25" secondAttribute="bottom" id="7BF-0I-V0i"/>
-                            <constraint firstItem="TzI-6w-naT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ddM-vX-oKe"/>
-                            <constraint firstItem="TzI-6w-naT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jxH-CT-Gps"/>
-                            <constraint firstItem="TzI-6w-naT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kHa-vq-9XM"/>
-                            <constraint firstItem="e2z-6H-V25" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mOL-oV-aeo"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="top" secondItem="XRx-Zl-TQ8" secondAttribute="bottom" id="52y-6P-Dox"/>
+                            <constraint firstItem="e2z-6H-V25" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="F7X-UX-dBt"/>
+                            <constraint firstItem="XRx-Zl-TQ8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="GDQ-we-c1a"/>
+                            <constraint firstAttribute="bottom" secondItem="e2z-6H-V25" secondAttribute="bottom" id="T7N-gs-Wo8"/>
+                            <constraint firstItem="e2z-6H-V25" firstAttribute="top" secondItem="TzI-6w-naT" secondAttribute="bottom" constant="5" id="VNt-hB-X6t"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="top" secondItem="XRx-Zl-TQ8" secondAttribute="bottom" id="ZIS-cp-zRj"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cZA-PG-cej"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="kdp-Fr-yJg"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="o78-UH-3ko"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qZ5-e2-4hH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XRx-Zl-TQ8" secondAttribute="trailing" id="qax-TY-BVX"/>
+                            <constraint firstItem="XRx-Zl-TQ8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="saj-ux-ane"/>
+                            <constraint firstItem="e2z-6H-V25" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wtk-fe-k1z"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="News" id="5cF-qL-Daq">
@@ -92,6 +109,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="label" destination="XRx-Zl-TQ8" id="o8p-1b-xLM"/>
                         <outlet property="searchBar" destination="TzI-6w-naT" id="Oj6-6s-xfd"/>
                         <outlet property="tableView" destination="e2z-6H-V25" id="JGE-gW-EIQ"/>
                     </connections>
@@ -165,6 +183,9 @@
         <image name="newspaper" catalog="system" width="128" height="108"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
