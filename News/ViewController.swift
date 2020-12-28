@@ -9,6 +9,7 @@ import UIKit
 import SwiftyJSON
 import SDWebImage
 import JGProgressHUD
+import Network
 
 
 struct dataType: Identifiable{
@@ -26,9 +27,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var label: UILabel!
+    @IBOutlet var connectionStat: UIBarButtonItem!
     private var hasFetched = false
     let hud = JGProgressHUD()
     var refreshControl = UIRefreshControl()
+    
+    let monitor = NWPathMonitor()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +50,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                self.connectionStat.tintColor = UIColor.green
+            } else {
+                self.connectionStat.tintColor = UIColor.red
+                self.showToast(controller: self, message: "No internet connection!", seconds: 3)
+            }
+        }
+       
+        monitor.start(queue: DispatchQueue.main)
         
     }
     @objc func refresh(_ sender: AnyObject) {

@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search keywords " translatesAutoresizingMaskIntoConstraints="NO" id="TzI-6w-naT">
-                                <rect key="frame" x="0.0" y="161" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="160.5" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e2z-6H-V25">
@@ -85,6 +85,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="News" id="5cF-qL-Daq">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="wifi" catalog="system" id="TRN-Nf-bae">
+                            <color key="tintColor" systemColor="systemRedColor"/>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Apple" image="applelogo" catalog="system" id="B0r-qa-xKp">
                                 <connections>
@@ -109,6 +112,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="connectionStat" destination="TRN-Nf-bae" id="4ev-xW-i8C"/>
                         <outlet property="label" destination="XRx-Zl-TQ8" id="o8p-1b-xLM"/>
                         <outlet property="searchBar" destination="TzI-6w-naT" id="Oj6-6s-xfd"/>
                         <outlet property="tableView" destination="e2z-6H-V25" id="JGE-gW-EIQ"/>
@@ -181,6 +185,7 @@
         <image name="applelogo" catalog="system" width="103" height="128"/>
         <image name="arrowshape.turn.up.right.circle" catalog="system" width="128" height="121"/>
         <image name="newspaper" catalog="system" width="128" height="108"/>
+        <image name="wifi" catalog="system" width="128" height="91"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
