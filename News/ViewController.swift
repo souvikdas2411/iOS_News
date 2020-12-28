@@ -20,36 +20,48 @@ struct dataType: Identifiable{
 }
 var datas = [dataType]()
 var results = [dataType]()
-
+var defURL = ""
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     private var hasFetched = false
     let hud = JGProgressHUD()
+    var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        tableView.addSubview(refreshControl) // not required when using UITableViewController
         searchBar.delegate = self
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-//        datas.removeAll()
-//        tableView.reloadData()
-        getData(source: "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19")
+        defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+        getData(source: defURL)
+    }
+    @objc func refresh(_ sender: AnyObject) {
+        if defURL == "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"{
+            getHack(source: defURL)
+        }
+        getData(source: defURL)
+        
     }
     
     @IBAction func didTapApple(){
         datas.removeAll()
         tableView.reloadData()
-        getData(source: "https://newsapi.org/v2/everything?q=apple&from=2020-12-26&to=2020-12-26&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19")
+        defURL = "https://newsapi.org/v2/everything?q=apple&from=2020-12-26&to=2020-12-26&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+        getData(source: defURL)
     }
     @IBAction func didTapBusiness(){
         datas.removeAll()
         tableView.reloadData()
-        getData(source: "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19")
+        defURL = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+        getData(source: defURL)
     }
     @IBAction func didTapHack(){
         
@@ -58,12 +70,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        hud.textLabel.text = "HackerNews Loading"
         datas.removeAll()
         tableView.reloadData()
-        getHack()
+        defURL = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
+        getHack(source: defURL)
     }
     @IBAction func didTapIndia(){
         datas.removeAll()
         tableView.reloadData()
-        getData(source: "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19")
+        defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+        getData(source: defURL)
     }
     func getData(source: String){
         let url = URL(string: source)!
@@ -91,13 +105,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //                    self.tableView.isHidden = false
                 }
             }
+            self.refreshControl.endRefreshing()
             
         }.resume()
     }
-    func getHack(){
+    func getHack(source: String){
         hud.show(in: self.view)
         hud.textLabel.text = "Loading"
-        let source = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
+//        let source = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
         let url = URL(string: source)!
         let session = URLSession(configuration: .default)
         session.dataTask(with: url){ (data, _, error) in
@@ -131,6 +146,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                 }.resume()
             }
+            self.refreshControl.endRefreshing()
             self.hud.dismiss()
         }.resume()
     }
