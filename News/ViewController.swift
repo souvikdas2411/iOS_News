@@ -32,6 +32,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = "India News"
+        getCorona()
+        defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+        getData(source: defURL)
                 
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
@@ -41,9 +46,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        getCorona()
-        defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
-        getData(source: defURL)
     }
     @objc func refresh(_ sender: AnyObject) {
         datas.removeAll()
@@ -58,12 +60,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @IBAction func didTapApple(){
+        self.title = "Apple News"
         datas.removeAll()
         tableView.reloadData()
         defURL = "https://newsapi.org/v2/everything?q=apple&from=2020-12-26&to=2020-12-26&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
         getData(source: defURL)
     }
     @IBAction func didTapBusiness(){
+        self.title = "Business News"
         datas.removeAll()
         tableView.reloadData()
         defURL = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
@@ -74,12 +78,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        tableView.isHidden = true
 //        hud.show(in: self.view)
 //        hud.textLabel.text = "HackerNews Loading"
+        self.title = "Hacker News"
         datas.removeAll()
         tableView.reloadData()
         defURL = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
         getHack(source: defURL)
     }
     @IBAction func didTapIndia(){
+        self.title = "India News"
         datas.removeAll()
         tableView.reloadData()
         defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
