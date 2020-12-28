@@ -16,8 +16,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e2z-6H-V25">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                            <searchBar contentMode="redraw" placeholder="Search keywords " translatesAutoresizingMaskIntoConstraints="NO" id="TzI-6w-naT">
+                                <rect key="frame" x="0.0" y="140" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e2z-6H-V25">
+                                <rect key="frame" x="0.0" y="201" width="414" height="695"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="ivJ-Ti-kpo" detailTextLabel="4pN-zZ-fWy" imageView="mcu-Te-cZp" style="IBUITableViewCellStyleSubtitle" id="HzI-A8-nP2">
@@ -54,10 +58,13 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="e2z-6H-V25" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="6xi-dr-2O6"/>
-                            <constraint firstAttribute="bottom" secondItem="e2z-6H-V25" secondAttribute="bottom" id="p1l-yM-706"/>
-                            <constraint firstItem="e2z-6H-V25" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="s5I-sN-VYP"/>
-                            <constraint firstItem="e2z-6H-V25" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wM0-5F-QAb"/>
+                            <constraint firstItem="e2z-6H-V25" firstAttribute="top" secondItem="TzI-6w-naT" secondAttribute="bottom" constant="5" id="2Qb-e0-LPv"/>
+                            <constraint firstItem="e2z-6H-V25" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="6bV-UC-QYC"/>
+                            <constraint firstAttribute="bottom" secondItem="e2z-6H-V25" secondAttribute="bottom" id="7BF-0I-V0i"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ddM-vX-oKe"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jxH-CT-Gps"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kHa-vq-9XM"/>
+                            <constraint firstItem="e2z-6H-V25" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mOL-oV-aeo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="News" id="5cF-qL-Daq">
@@ -85,6 +92,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="TzI-6w-naT" id="Oj6-6s-xfd"/>
                         <outlet property="tableView" destination="e2z-6H-V25" id="JGE-gW-EIQ"/>
                     </connections>
                 </viewController>
@@ -102,7 +110,13 @@
                         <viewLayoutGuide key="safeArea" id="lku-Vr-hyF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="g6B-jZ-eoq"/>
+                    <navigationItem key="navigationItem" id="g6B-jZ-eoq">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="arrowshape.turn.up.right.circle" catalog="system" id="Zei-Ot-knG">
+                            <connections>
+                                <action selector="didTapShare" destination="xrn-Wp-iSM" id="h5Q-QE-pPs"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M1z-tF-CeY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -147,6 +161,7 @@
     </scenes>
     <resources>
         <image name="applelogo" catalog="system" width="103" height="128"/>
+        <image name="arrowshape.turn.up.right.circle" catalog="system" width="128" height="121"/>
         <image name="newspaper" catalog="system" width="128" height="108"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

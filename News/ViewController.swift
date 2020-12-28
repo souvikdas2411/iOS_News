@@ -19,35 +19,34 @@ struct dataType: Identifiable{
     var image: String
 }
 var datas = [dataType]()
+var results = [dataType]()
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
+    private var hasFetched = false
     let hud = JGProgressHUD()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        searchBar.delegate = self
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
+//        datas.removeAll()
+//        tableView.reloadData()
         getData(source: "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19")
-//        tableView.isHidden = true
-//        hud.show(in: self.view)
-//        hud.textLabel.text = "HackerNews Loading"
-//        getHack()
     }
     
     @IBAction func didTapApple(){
-//                tableView.isHidden = true
         datas.removeAll()
         tableView.reloadData()
         getData(source: "https://newsapi.org/v2/everything?q=apple&from=2020-12-26&to=2020-12-26&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19")
     }
     @IBAction func didTapBusiness(){
-//                tableView.isHidden = true
         datas.removeAll()
         tableView.reloadData()
         getData(source: "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19")
@@ -62,7 +61,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         getHack()
     }
     @IBAction func didTapIndia(){
-//                tableView.isHidden = true
         datas.removeAll()
         tableView.reloadData()
         getData(source: "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19")
@@ -97,7 +95,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }.resume()
     }
     func getHack(){
-        let source = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
+        hud.show(in: self.view)
+        hud.textLabel.text = "Loading"
+        let source = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
         let url = URL(string: source)!
         let session = URLSession(configuration: .default)
         session.dataTask(with: url){ (data, _, error) in
@@ -131,18 +131,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                 }.resume()
             }
-            
-        
-            
+            self.hud.dismiss()
         }.resume()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if hasFetched{
+            return results.count
+        }
         return datas.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        if hasFetched{
+            cell.textLabel?.numberOfLines = 0
+            cell.textLabel?.lineBreakMode = .byWordWrapping
+            cell.textLabel?.text = results[indexPath.row].title
+            cell.detailTextLabel?.numberOfLines = 0
+            cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+            cell.detailTextLabel?.text = results[indexPath.row].desc
+            return cell
+        }
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.lineBreakMode = .byWordWrapping
         cell.textLabel?.text = datas[indexPath.row].title
@@ -155,8 +166,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("tapped")
-        
         let item = datas[indexPath.row].url
         guard let vc = storyboard?.instantiateViewController(identifier: "viewer") as? ViewerViewController else {
             return
@@ -166,9 +175,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        present(vc, animated: true, completion: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
+}
+//MARK:- Search bar delegate
+extension ViewController: UISearchBarDelegate {
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text, !text.replacingOccurrences(of: " ", with: "").isEmpty else {
+            hasFetched = false
+            tableView.reloadData()
+            return
+        }
+        
+        searchBar.resignFirstResponder()
+        results.removeAll()
+        searchUsers(query: text)
+    }
     
+    func searchUsers(query: String) {
+        for i in datas{
+            if i.title.contains(query){
+                results.append(dataType(id: i.id, title: i.title, desc: i.desc, url: i.url, image: i.image))
+                hasFetched = true
+                tableView.reloadData()
+            }
+        }
+        if results.isEmpty {
+            searchBar.text = ""
+            showToast(controller: self, message: "Oops! No results found.", seconds: 2.0)
+        }
+    }
     
-    
+    func showToast(controller: UIViewController, message: String, seconds: Double){
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        controller.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds){
+            alert.dismiss(animated: true, completion: nil)
+        }
+    }
 }
 
