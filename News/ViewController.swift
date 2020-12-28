@@ -193,7 +193,7 @@ extension ViewController: UISearchBarDelegate {
     
     func searchUsers(query: String) {
         for i in datas{
-            if i.title.contains(query){
+            if i.title.contains(query) || i.desc.contains(query){
                 results.append(dataType(id: i.id, title: i.title, desc: i.desc, url: i.url, image: i.image))
                 hasFetched = true
                 tableView.reloadData()
@@ -201,7 +201,7 @@ extension ViewController: UISearchBarDelegate {
         }
         if results.isEmpty {
             searchBar.text = ""
-            showToast(controller: self, message: "Oops! No results found.", seconds: 2.0)
+            showToast(controller: self, message: "Oops! No results found.", seconds: 1.0)
         }
     }
     
