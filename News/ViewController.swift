@@ -21,18 +21,20 @@ struct dataType: Identifiable{
 }
 var datas = [dataType]()
 var results = [dataType]()
+var sel = [Cell]()
 var defURL = ""
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+var scrollDatas = ["Headlines India","Headlines US","India Business Headlines","Hacker News","Tech Scrape"]
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource{
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
-    @IBOutlet var label: UILabel!
     @IBOutlet var timeLabel: UIBarButtonItem!
     @IBOutlet var connectionStat: UIBarButtonItem!
-    @IBOutlet var sources: UIBarButtonItem!
+    @IBOutlet var collectionView: UICollectionView!
     
     private var hasFetched = false
     let hud = JGProgressHUD()
+    let hudC = JGProgressHUD()
     var refreshControl = UIRefreshControl()
     
     let monitor = NWPathMonitor()
@@ -42,18 +44,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
+    
         
         self.title = "India News"
-        getCorona()
         defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
         getData(source: defURL)
-                
+            
+        
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         tableView.addSubview(refreshControl) // not required when using UITableViewController
         searchBar.delegate = self
+     
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        //collectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
+        
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -79,10 +85,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         datas.removeAll()
         tableView.reloadData()
         if defURL == "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"{
-            getCorona()
             getHack(source: defURL)
         }
-        getCorona()
         getData(source: defURL)
         
     }
@@ -91,9 +95,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         timeLabel.title = dateFormatter.string(from: Date())
     }
     
-    @IBAction func didTapSources(){
-        presentActionSheet()
-    }
+//    @IBAction func didTapCorona(){
+//        hudC.show(in: self.view)
+//        getCorona()
+//    }
+//    @IBAction func didTapSources(){
+//        presentActionSheet()
+//    }
     func getData(source: String){
         let url = URL(string: source)!
         let session = URLSession(configuration: .default)
@@ -191,8 +199,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.detailTextLabel?.numberOfLines = 0
         cell.detailTextLabel?.lineBreakMode = .byWordWrapping
         cell.detailTextLabel?.text = datas[indexPath.row].desc
-        //        let url = URL(string: datas[indexPath.row].image)
-        //        cell.imageView.image = SDWebImageDownloader.downloadImage(with: url, completed: nil)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -206,7 +212,60 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //present(vc, animated: true, completion: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return scrollDatas.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellC", for: indexPath) as! Cell
+        cell.layer.cornerRadius = 18.0
+        cell.layer.borderWidth = 1.0
+        cell.layer.borderColor = UIColor.lightGray.cgColor
+        cell.textLabel.text = scrollDatas[indexPath.row]
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! Cell
+        if cell.textLabel.text == "Headlines India"{
+            self.title = "India News"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+            self.getData(source: defURL)
+        }
+        if cell.textLabel.text == "Headlines US"{
+            self.title = "US News"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+            self.getData(source: defURL)
+        }
+        if cell.textLabel.text == "India Business Headlines"{
+            self.title = "Business News"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+            self.getData(source: defURL)
+        }
+        if cell.textLabel.text == "Hacker News"{
+            self.title = "Hacker News"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
+            self.getHack(source: defURL)
+        }
+        if cell.textLabel.text == "Tech Scrape"{
+            self.title = "Tech News"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://newsapi.org/v2/everything?domains=thenextweb.com&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+            self.getData(source: defURL)
+        }
+        
+    }
 }
+
+
 //MARK:- Search bar delegate
 extension ViewController: UISearchBarDelegate {
     
@@ -243,6 +302,15 @@ extension ViewController: UISearchBarDelegate {
             alert.dismiss(animated: true, completion: nil)
         }
     }
+    func showCorona(controller: UIViewController, message: String){
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Okay", comment: ""),
+                                            style: .cancel,
+                                            handler: nil))
+        hudC.dismiss()
+        controller.present(alert, animated: true, completion: nil)
+        
+    }
     func getCorona(){
         let headers = [
             "x-rapidapi-key": "cb3b31426dmsh9e8f5509ac874dep19234cjsn368eafc7208f",
@@ -263,7 +331,8 @@ extension ViewController: UISearchBarDelegate {
                 let json = try! JSON(data: data!)
                 for i in json[]{
                     DispatchQueue.main.async {
-                        self.label.text = "COVID-19 Confirmed- \(i.1["confirmed"])/ Deaths- \(i.1["deaths"])/ Recovered- \(i.1["recovered"])"
+                        self.showCorona(controller: self, message: "COVID-19 Confirmed- \(i.1["confirmed"])/ Deaths- \(i.1["deaths"])/ Recovered- \(i.1["recovered"])")
+                        //self.label.text = "COVID-19 Confirmed- \(i.1["confirmed"])/ Deaths- \(i.1["deaths"])/ Recovered- \(i.1["recovered"])"
                     }
                 }
                 
@@ -272,63 +341,99 @@ extension ViewController: UISearchBarDelegate {
 
         dataTask.resume()
     }
-    func presentActionSheet() {
-        let actionSheet = UIAlertController(title: NSLocalizedString("Sources", comment: "") ,
-                                            message: NSLocalizedString("Select source below", comment: ""),
-                                            preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-                                            style: .cancel,
-                                            handler: nil))
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("India News", comment: ""),
-                                            style: .default,
-                                            handler: { [weak self] _ in
-                                                
-                                                self?.title = "India News"
-                                                datas.removeAll()
-                                                self?.tableView.reloadData()
-                                                defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
-                                                self?.getData(source: defURL)
-                                                
-                                            }))
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Business News", comment: ""),
-                                            style: .default,
-                                            handler: { [weak self] _ in
-                                                
-                                                self?.title = "Business News"
-                                                datas.removeAll()
-                                                self?.tableView.reloadData()
-                                                defURL = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
-                                                self?.getData(source: defURL)
-                                                
-                                            }))
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Hacker News", comment: ""),
-                                            style: .default,
-                                            handler: { [weak self] _ in
-                                                
-                                                self?.title = "Hacker News"
-                                                datas.removeAll()
-                                                self?.tableView.reloadData()
-                                                defURL = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
-                                                self?.getHack(source: defURL)
-                                                
-                                            }))
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Apple scrape", comment: ""),
-                                            style: .default,
-                                            handler: { [weak self] _ in
-                                                
-                                                self?.title = "Apple News"
-                                                datas.removeAll()
-                                                self?.tableView.reloadData()
-                                                defURL = "https://newsapi.org/v2/everything?q=apple&from=2020-12-26&to=2020-12-26&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
-                                                self?.getData(source: defURL)
-                                                
-                                                
-                                            }))
-        
-        //iPad Alert Controller
-        actionSheet.popoverPresentationController?.barButtonItem = self.sources
-        
-        present(actionSheet, animated: true)
-    }
+//    func presentActionSheet() {
+//        let actionSheet = UIAlertController(title: NSLocalizedString("Sources", comment: "") ,
+//                                            message: NSLocalizedString("Select source below", comment: ""),
+//                                            preferredStyle: .actionSheet)
+//        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+//                                            style: .cancel,
+//                                            handler: nil))
+//        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Headlines India", comment: ""),
+//                                            style: .default,
+//                                            handler: { [weak self] _ in
+//
+//                                                self?.title = "India News"
+//                                                datas.removeAll()
+//                                                self?.tableView.reloadData()
+//                                                defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+//                                                self?.getData(source: defURL)
+//
+//                                            }))
+//        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Headlines US", comment: ""),
+//                                            style: .default,
+//                                            handler: { [weak self] _ in
+//
+//                                                self?.title = "US News"
+//                                                datas.removeAll()
+//                                                self?.tableView.reloadData()
+//                                                defURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+//                                                self?.getData(source: defURL)
+//
+//                                            }))
+//        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("India Business Headlines", comment: ""),
+//                                            style: .default,
+//                                            handler: { [weak self] _ in
+//
+//                                                self?.title = "Business News"
+//                                                datas.removeAll()
+//                                                self?.tableView.reloadData()
+//                                                defURL = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+//                                                self?.getData(source: defURL)
+//
+//                                            }))
+//        //Some NSURLProblem
+////        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Headlines BBC", comment: ""),
+////                                            style: .default,
+////                                            handler: { [weak self] _ in
+////
+////                                                self?.title = "Business News"
+////                                                datas.removeAll()
+////                                                self?.tableView.reloadData()
+////                                                defURL = "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+////                                                self?.getData(source: defURL)
+////
+////                                            }))
+//        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Hacker News", comment: ""),
+//                                            style: .default,
+//                                            handler: { [weak self] _ in
+//
+//                                                self?.title = "Hacker News"
+//                                                datas.removeAll()
+//                                                self?.tableView.reloadData()
+//                                                defURL = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
+//                                                self?.getHack(source: defURL)
+//
+//                                            }))
+//        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Tech scrape", comment: ""),
+//                                            style: .default,
+//                                            handler: { [weak self] _ in
+//
+//                                                self?.title = "Tech News"
+//                                                datas.removeAll()
+//                                                self?.tableView.reloadData()
+//                                                defURL = "https://newsapi.org/v2/everything?domains=thenextweb.com&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+//                                                self?.getData(source: defURL)
+//
+//
+//                                            }))
+////        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Startup scrape", comment: ""),
+////                                            style: .default,
+////                                            handler: { [weak self] _ in
+////
+////                                                self?.title = "Apple News"
+////                                                datas.removeAll()
+////                                                self?.tableView.reloadData()
+////                                                defURL = "https://newsapi.org/v2/everything?q=startup&from=2020-12-28&to=2020-12-28&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+////                                                self?.getData(source: defURL)
+////
+////
+////                                            }))
+//
+//        //iPad Alert Controller
+//        actionSheet.popoverPresentationController?.barButtonItem = self.timeLabel
+//
+//        present(actionSheet, animated: true)
+//    }
 }
+
 

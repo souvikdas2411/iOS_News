@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4FC4DE92259B9CB000935688 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC4DE91259B9CB000935688 /* Cell.swift */; };
 		4FC5D99C25990E1B00C09715 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC5D99B25990E1B00C09715 /* AppDelegate.swift */; };
 		4FC5D99E25990E1B00C09715 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC5D99D25990E1B00C09715 /* SceneDelegate.swift */; };
 		4FC5D9A025990E1B00C09715 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC5D99F25990E1B00C09715 /* ViewController.swift */; };
@@ -17,10 +18,10 @@
 		4FC5D9BA25990F0600C09715 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC5D9B925990F0600C09715 /* SDWebImage */; };
 		4FC5D9DA2599251F00C09715 /* ViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC5D9D92599251F00C09715 /* ViewerViewController.swift */; };
 		4FC5D9DE2599CB0600C09715 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC5D9DD2599CB0600C09715 /* JGProgressHUD */; };
-		4FC5D9E2259B09AE00C09715 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC5D9E1259B09AE00C09715 /* MarqueeLabel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4FC4DE91259B9CB000935688 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		4FC5D99825990E1B00C09715 /* News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = News.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC5D99B25990E1B00C09715 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FC5D99D25990E1B00C09715 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -38,7 +39,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FC5D9E2259B09AE00C09715 /* MarqueeLabel in Frameworks */,
 				4FC5D9BA25990F0600C09715 /* SDWebImage in Frameworks */,
 				4FC5D9DE2599CB0600C09715 /* JGProgressHUD in Frameworks */,
 				4FC5D9B425990E7400C09715 /* SwiftyJSON in Frameworks */,
@@ -77,6 +77,7 @@
 				4FC5D9A425990E1C00C09715 /* Assets.xcassets */,
 				4FC5D9A625990E1C00C09715 /* LaunchScreen.storyboard */,
 				4FC5D9A925990E1C00C09715 /* Info.plist */,
+				4FC4DE91259B9CB000935688 /* Cell.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -108,7 +109,6 @@
 				4FC5D9B325990E7400C09715 /* SwiftyJSON */,
 				4FC5D9B925990F0600C09715 /* SDWebImage */,
 				4FC5D9DD2599CB0600C09715 /* JGProgressHUD */,
-				4FC5D9E1259B09AE00C09715 /* MarqueeLabel */,
 			);
 			productName = News;
 			productReference = 4FC5D99825990E1B00C09715 /* News.app */;
@@ -172,6 +172,7 @@
 			files = (
 				4FC5D9A025990E1B00C09715 /* ViewController.swift in Sources */,
 				4FC5D99C25990E1B00C09715 /* AppDelegate.swift in Sources */,
+				4FC4DE92259B9CB000935688 /* Cell.swift in Sources */,
 				4FC5D9DA2599251F00C09715 /* ViewerViewController.swift in Sources */,
 				4FC5D99E25990E1B00C09715 /* SceneDelegate.swift in Sources */,
 			);
@@ -328,6 +329,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Souvik.News;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -349,6 +351,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Souvik.News;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -430,11 +433,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FC5D9DC2599CB0600C09715 /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
 			productName = JGProgressHUD;
-		};
-		4FC5D9E1259B09AE00C09715 /* MarqueeLabel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4FC5D9E0259B09AE00C09715 /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
-			productName = MarqueeLabel;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
