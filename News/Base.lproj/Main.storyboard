@@ -89,25 +89,13 @@
                             <color key="tintColor" systemColor="systemRedColor"/>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem title="Apple" image="applelogo" catalog="system" id="B0r-qa-xKp">
+                            <barButtonItem title="Sources" id="qBa-XF-RuZ">
                                 <connections>
-                                    <action selector="didTapApple" destination="BYZ-38-t0r" id="0He-kw-HJL"/>
+                                    <action selector="didTapSources" destination="BYZ-38-t0r" id="Cdn-AJ-d4E"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="HN" id="XMw-QM-WjG">
-                                <connections>
-                                    <action selector="didTapHack" destination="BYZ-38-t0r" id="Xqy-wZ-3VA"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Business" id="grn-kh-wWc">
-                                <connections>
-                                    <action selector="didTapBusiness" destination="BYZ-38-t0r" id="Y1Y-i3-W1E"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="India" id="tOq-bN-8e5">
-                                <connections>
-                                    <action selector="didTapIndia" destination="BYZ-38-t0r" id="Ufh-xj-Ef5"/>
-                                </connections>
+                            <barButtonItem title="Time" id="TNh-TS-1VF">
+                                <color key="tintColor" systemColor="systemGrayColor"/>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
@@ -115,7 +103,9 @@
                         <outlet property="connectionStat" destination="TRN-Nf-bae" id="4ev-xW-i8C"/>
                         <outlet property="label" destination="XRx-Zl-TQ8" id="o8p-1b-xLM"/>
                         <outlet property="searchBar" destination="TzI-6w-naT" id="Oj6-6s-xfd"/>
+                        <outlet property="sources" destination="qBa-XF-RuZ" id="Rpf-Rx-7jC"/>
                         <outlet property="tableView" destination="e2z-6H-V25" id="JGE-gW-EIQ"/>
+                        <outlet property="timeLabel" destination="TNh-TS-1VF" id="3G9-o6-wYJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -182,12 +172,14 @@
         </scene>
     </scenes>
     <resources>
-        <image name="applelogo" catalog="system" width="103" height="128"/>
         <image name="arrowshape.turn.up.right.circle" catalog="system" width="128" height="121"/>
         <image name="newspaper" catalog="system" width="128" height="108"/>
         <image name="wifi" catalog="system" width="128" height="91"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

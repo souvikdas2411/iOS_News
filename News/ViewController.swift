@@ -10,7 +10,7 @@ import SwiftyJSON
 import SDWebImage
 import JGProgressHUD
 import Network
-
+import MarqueeLabel
 
 struct dataType: Identifiable{
     var id: String
@@ -27,16 +27,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var label: UILabel!
+    @IBOutlet var timeLabel: UIBarButtonItem!
     @IBOutlet var connectionStat: UIBarButtonItem!
+    @IBOutlet var sources: UIBarButtonItem!
+    
     private var hasFetched = false
     let hud = JGProgressHUD()
     var refreshControl = UIRefreshControl()
     
     let monitor = NWPathMonitor()
     
+    var dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         
         self.title = "India News"
         getCorona()
@@ -47,9 +54,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         tableView.addSubview(refreshControl) // not required when using UITableViewController
         searchBar.delegate = self
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .medium
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector:"updateClock", userInfo: nil, repeats: true)
         
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
@@ -75,37 +87,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    @IBAction func didTapApple(){
-        self.title = "Apple News"
-        datas.removeAll()
-        tableView.reloadData()
-        defURL = "https://newsapi.org/v2/everything?q=apple&from=2020-12-26&to=2020-12-26&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
-        getData(source: defURL)
+    @objc func updateClock(){
+        timeLabel.title = dateFormatter.string(from: Date())
     }
-    @IBAction func didTapBusiness(){
-        self.title = "Business News"
-        datas.removeAll()
-        tableView.reloadData()
-        defURL = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
-        getData(source: defURL)
-    }
-    @IBAction func didTapHack(){
-        
-//        tableView.isHidden = true
-//        hud.show(in: self.view)
-//        hud.textLabel.text = "HackerNews Loading"
-        self.title = "Hacker News"
-        datas.removeAll()
-        tableView.reloadData()
-        defURL = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
-        getHack(source: defURL)
-    }
-    @IBAction func didTapIndia(){
-        self.title = "India News"
-        datas.removeAll()
-        tableView.reloadData()
-        defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
-        getData(source: defURL)
+    
+    @IBAction func didTapSources(){
+        presentActionSheet()
     }
     func getData(source: String){
         let url = URL(string: source)!
@@ -131,7 +118,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self.tableView.dataSource = self
                     self.tableView.reloadData()
                     self.refreshControl.endRefreshing()
-//                    self.tableView.isHidden = false
                 }
             }
             
@@ -141,7 +127,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func getHack(source: String){
         hud.textLabel.text = "Loading"
         hud.show(in: self.view)
-//        let source = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
         let url = URL(string: source)!
         let session = URLSession(configuration: .default)
         session.dataTask(with: url){ (data, _, error) in
@@ -286,6 +271,64 @@ extension ViewController: UISearchBarDelegate {
         })
 
         dataTask.resume()
+    }
+    func presentActionSheet() {
+        let actionSheet = UIAlertController(title: NSLocalizedString("Sources", comment: "") ,
+                                            message: NSLocalizedString("Select source below", comment: ""),
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+                                            style: .cancel,
+                                            handler: nil))
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("India News", comment: ""),
+                                            style: .default,
+                                            handler: { [weak self] _ in
+                                                
+                                                self?.title = "India News"
+                                                datas.removeAll()
+                                                self?.tableView.reloadData()
+                                                defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+                                                self?.getData(source: defURL)
+                                                
+                                            }))
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Business News", comment: ""),
+                                            style: .default,
+                                            handler: { [weak self] _ in
+                                                
+                                                self?.title = "Business News"
+                                                datas.removeAll()
+                                                self?.tableView.reloadData()
+                                                defURL = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+                                                self?.getData(source: defURL)
+                                                
+                                            }))
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Hacker News", comment: ""),
+                                            style: .default,
+                                            handler: { [weak self] _ in
+                                                
+                                                self?.title = "Hacker News"
+                                                datas.removeAll()
+                                                self?.tableView.reloadData()
+                                                defURL = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
+                                                self?.getHack(source: defURL)
+                                                
+                                            }))
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Apple scrape", comment: ""),
+                                            style: .default,
+                                            handler: { [weak self] _ in
+                                                
+                                                self?.title = "Apple News"
+                                                datas.removeAll()
+                                                self?.tableView.reloadData()
+                                                defURL = "https://newsapi.org/v2/everything?q=apple&from=2020-12-26&to=2020-12-26&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+                                                self?.getData(source: defURL)
+                                                
+                                                
+                                            }))
+        
+        //iPad Alert Controller
+        actionSheet.popoverPresentationController?.barButtonItem = self.sources
+        
+        present(actionSheet, animated: true)
     }
 }
 

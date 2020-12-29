@@ -17,6 +17,7 @@
 		4FC5D9BA25990F0600C09715 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC5D9B925990F0600C09715 /* SDWebImage */; };
 		4FC5D9DA2599251F00C09715 /* ViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC5D9D92599251F00C09715 /* ViewerViewController.swift */; };
 		4FC5D9DE2599CB0600C09715 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC5D9DD2599CB0600C09715 /* JGProgressHUD */; };
+		4FC5D9E2259B09AE00C09715 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC5D9E1259B09AE00C09715 /* MarqueeLabel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FC5D9E2259B09AE00C09715 /* MarqueeLabel in Frameworks */,
 				4FC5D9BA25990F0600C09715 /* SDWebImage in Frameworks */,
 				4FC5D9DE2599CB0600C09715 /* JGProgressHUD in Frameworks */,
 				4FC5D9B425990E7400C09715 /* SwiftyJSON in Frameworks */,
@@ -106,6 +108,7 @@
 				4FC5D9B325990E7400C09715 /* SwiftyJSON */,
 				4FC5D9B925990F0600C09715 /* SDWebImage */,
 				4FC5D9DD2599CB0600C09715 /* JGProgressHUD */,
+				4FC5D9E1259B09AE00C09715 /* MarqueeLabel */,
 			);
 			productName = News;
 			productReference = 4FC5D99825990E1B00C09715 /* News.app */;
@@ -138,6 +141,7 @@
 				4FC5D9B225990E7400C09715 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				4FC5D9B625990EEC00C09715 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				4FC5D9DC2599CB0600C09715 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
+				4FC5D9E0259B09AE00C09715 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
 			);
 			productRefGroup = 4FC5D99925990E1B00C09715 /* Products */;
 			projectDirPath = "";
@@ -401,6 +405,14 @@
 				minimumVersion = 2.2.0;
 			};
 		};
+		4FC5D9E0259B09AE00C09715 /* XCRemoteSwiftPackageReference "MarqueeLabel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cbpowell/MarqueeLabel.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -418,6 +430,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FC5D9DC2599CB0600C09715 /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
 			productName = JGProgressHUD;
+		};
+		4FC5D9E1259B09AE00C09715 /* MarqueeLabel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FC5D9E0259B09AE00C09715 /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
+			productName = MarqueeLabel;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
