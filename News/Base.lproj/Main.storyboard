@@ -19,18 +19,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" text="" placeholder="Search keywords " translatesAutoresizingMaskIntoConstraints="NO" id="TzI-6w-naT">
-                                <rect key="frame" x="0.0" y="140" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="140" width="361" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <scopeButtonTitles>
                                     <string>Title</string>
                                     <string>Title</string>
                                 </scopeButtonTitles>
                             </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwH-PL-9t2">
+                                <rect key="frame" x="361" y="140" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="bmr-zr-ADT"/>
+                                    <constraint firstAttribute="height" constant="48" id="of1-4e-UXs"/>
+                                </constraints>
+                                <state key="normal" image="corona"/>
+                                <connections>
+                                    <action selector="didTapCorona" destination="BYZ-38-t0r" eventType="touchUpInside" id="87C-Gt-Dmu"/>
+                                </connections>
+                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uRC-oY-9kJ">
                                 <rect key="frame" x="0.0" y="196" width="414" height="48"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="9AE-v2-dkv"/>
+                                    <constraint firstAttribute="height" constant="48" id="YJu-BX-VNG"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="RQ4-Fh-eb7">
                                     <size key="itemSize" width="160" height="30"/>
@@ -100,16 +111,18 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="uRC-oY-9kJ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4xU-S9-EWQ"/>
-                            <constraint firstItem="TzI-6w-naT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5zf-pt-tLC"/>
-                            <constraint firstItem="e2z-6H-V25" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="O0S-Pk-cbx"/>
-                            <constraint firstItem="uRC-oY-9kJ" firstAttribute="top" secondItem="TzI-6w-naT" secondAttribute="bottom" id="PBu-OI-g0m"/>
-                            <constraint firstAttribute="bottom" secondItem="e2z-6H-V25" secondAttribute="bottom" id="YFz-Xq-ZGp"/>
-                            <constraint firstItem="uRC-oY-9kJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZoW-hi-2IV"/>
-                            <constraint firstItem="TzI-6w-naT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fWm-gA-ibs"/>
-                            <constraint firstItem="TzI-6w-naT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ipM-ec-8V2"/>
-                            <constraint firstItem="e2z-6H-V25" firstAttribute="top" secondItem="uRC-oY-9kJ" secondAttribute="bottom" constant="5" id="rYY-Ma-ooj"/>
-                            <constraint firstItem="e2z-6H-V25" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="y6X-9B-qyE"/>
+                            <constraint firstItem="e2z-6H-V25" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6Ac-hJ-KJf"/>
+                            <constraint firstItem="uRC-oY-9kJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7nO-Kg-ej7"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Fh6-0m-b0A"/>
+                            <constraint firstItem="TzI-6w-naT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="FiG-gn-pge"/>
+                            <constraint firstItem="dwH-PL-9t2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="PaK-2m-MJF"/>
+                            <constraint firstItem="e2z-6H-V25" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Sw7-TK-edk"/>
+                            <constraint firstItem="dwH-PL-9t2" firstAttribute="leading" secondItem="TzI-6w-naT" secondAttribute="trailing" id="WIr-gG-uDd"/>
+                            <constraint firstAttribute="bottom" secondItem="e2z-6H-V25" secondAttribute="bottom" id="WmL-ke-6Rp"/>
+                            <constraint firstItem="uRC-oY-9kJ" firstAttribute="top" secondItem="TzI-6w-naT" secondAttribute="bottom" id="ehV-iA-lHW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dwH-PL-9t2" secondAttribute="trailing" constant="5" id="oid-g7-Cxi"/>
+                            <constraint firstItem="e2z-6H-V25" firstAttribute="top" secondItem="uRC-oY-9kJ" secondAttribute="bottom" constant="5" id="rg3-n5-ywC"/>
+                            <constraint firstItem="uRC-oY-9kJ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="wb3-AF-nIm"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="News" id="5cF-qL-Daq">
@@ -193,6 +206,7 @@
     </scenes>
     <resources>
         <image name="arrowshape.turn.up.right.circle" catalog="system" width="128" height="121"/>
+        <image name="corona" width="48" height="48"/>
         <image name="wifi" catalog="system" width="128" height="91"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

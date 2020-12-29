@@ -95,10 +95,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         timeLabel.title = dateFormatter.string(from: Date())
     }
     
-//    @IBAction func didTapCorona(){
-//        hudC.show(in: self.view)
-//        getCorona()
-//    }
+    @IBAction func didTapCorona(){
+        hudC.show(in: self.view)
+        getCorona()
+    }
 //    @IBAction func didTapSources(){
 //        presentActionSheet()
 //    }
