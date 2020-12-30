@@ -222,42 +222,85 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let item = datas[indexPath.row].url
-        guard let vc = storyboard?.instantiateViewController(identifier: "viewer") as? ViewerViewController else {
-            return
+        if hasFetched{
+//            hasFetched = false
+            let item = results[indexPath.row].url
+            guard let vc = storyboard?.instantiateViewController(identifier: "viewer") as? ViewerViewController else {
+                return
+            }
+            vc.myURL = item
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
         }
-        vc.myURL = item
-        vc.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.pushViewController(vc, animated: true)
+        else{
+            let item = datas[indexPath.row].url
+            guard let vc = storyboard?.instantiateViewController(identifier: "viewer") as? ViewerViewController else {
+                return
+            }
+            vc.myURL = item
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title: nil) { (_, _, completionHandler) in
-            self.bookmarks.removeAll()
-            self.bookmarks = self.realm.objects(BookmarkItem.self).map({$0})
-            let item = datas[indexPath.row]
-            let temp: BookmarkItem = {
-                let temp1 = BookmarkItem()
-                temp1.id = item.id
-                temp1.desc = item.desc
-                temp1.image = item.image
-                temp1.url = item.url
-                temp1.title = item.title
-                return temp1
-            }()
-            let count = self.bookmarks.count
-            for i in 0..<count{
-                if self.bookmarks[i].url == temp.url && self.bookmarks[i].id == temp.id{
-                    self.showToast(controller: self, message: "Bookmark exists!", seconds: 1)
-                    completionHandler(true)
-                    return
+            if !self.hasFetched{
+                self.bookmarks.removeAll()
+                self.bookmarks = self.realm.objects(BookmarkItem.self).map({$0})
+                let item = datas[indexPath.row]
+                let temp: BookmarkItem = {
+                    let temp1 = BookmarkItem()
+                    temp1.id = item.id
+                    temp1.desc = item.desc
+                    temp1.image = item.image
+                    temp1.url = item.url
+                    temp1.title = item.title
+                    return temp1
+                }()
+                let count = self.bookmarks.count
+                for i in 0..<count{
+                    if self.bookmarks[i].url == temp.url && self.bookmarks[i].id == temp.id{
+                        self.showToast(controller: self, message: "Bookmark exists!", seconds: 1)
+                        completionHandler(true)
+                        return
+                    }
                 }
+                self.realm.beginWrite()
+                self.realm.add(temp)
+                try! self.realm.commitWrite()
+                
+                self.showToast(controller: self, message: "Bookmarked!", seconds: 1)
+                completionHandler(true)
             }
-            self.realm.beginWrite()
-            self.realm.add(temp)
-            try! self.realm.commitWrite()
-            
-            self.showToast(controller: self, message: "Bookmarked!", seconds: 1)
-            completionHandler(true)
+            else{
+                self.hasFetched = false
+                self.bookmarks.removeAll()
+                self.bookmarks = self.realm.objects(BookmarkItem.self).map({$0})
+                let item = results[indexPath.row]
+                let temp: BookmarkItem = {
+                    let temp1 = BookmarkItem()
+                    temp1.id = item.id
+                    temp1.desc = item.desc
+                    temp1.image = item.image
+                    temp1.url = item.url
+                    temp1.title = item.title
+                    return temp1
+                }()
+                let count = self.bookmarks.count
+                for i in 0..<count{
+                    if self.bookmarks[i].url == temp.url && self.bookmarks[i].id == temp.id{
+                        self.showToast(controller: self, message: "Bookmark exists!", seconds: 1)
+                        completionHandler(true)
+                        return
+                    }
+                }
+                self.realm.beginWrite()
+                self.realm.add(temp)
+                try! self.realm.commitWrite()
+                
+                self.showToast(controller: self, message: "Bookmarked!", seconds: 1)
+                completionHandler(true)
+            }
             
         }
         deleteAction.image = UIImage(systemName: "bookmark")
@@ -267,38 +310,70 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title: nil) { (_, _, completionHandler) in
-            self.bookmarks.removeAll()
-            self.bookmarks = self.realm.objects(BookmarkItem.self).map({$0})
-            let item = datas[indexPath.row]
-            let temp: BookmarkItem = {
-                let temp1 = BookmarkItem()
-                temp1.id = item.id
-                temp1.desc = item.desc
-                temp1.image = item.image
-                temp1.url = item.url
-                temp1.title = item.title
-                return temp1
-            }()
-            let count = self.bookmarks.count
-            for i in 0..<count{
-                if self.bookmarks[i].url == temp.url && self.bookmarks[i].id == temp.id{
-                    self.showToast(controller: self, message: "Bookmark exists!", seconds: 1)
-                    completionHandler(true)
-                    return
+            if !self.hasFetched{
+                self.bookmarks.removeAll()
+                self.bookmarks = self.realm.objects(BookmarkItem.self).map({$0})
+                let item = datas[indexPath.row]
+                let temp: BookmarkItem = {
+                    let temp1 = BookmarkItem()
+                    temp1.id = item.id
+                    temp1.desc = item.desc
+                    temp1.image = item.image
+                    temp1.url = item.url
+                    temp1.title = item.title
+                    return temp1
+                }()
+                let count = self.bookmarks.count
+                for i in 0..<count{
+                    if self.bookmarks[i].url == temp.url && self.bookmarks[i].id == temp.id{
+                        self.showToast(controller: self, message: "Bookmark exists!", seconds: 1)
+                        completionHandler(true)
+                        return
+                    }
                 }
+                self.realm.beginWrite()
+                self.realm.add(temp)
+                try! self.realm.commitWrite()
+                
+                self.showToast(controller: self, message: "Bookmarked!", seconds: 1)
+                completionHandler(true)
             }
-            self.realm.beginWrite()
-            self.realm.add(temp)
-            try! self.realm.commitWrite()
-            
-            self.showToast(controller: self, message: "Bookmarked!", seconds: 1)
-            completionHandler(true)
+            else{
+                self.hasFetched = false
+                self.bookmarks.removeAll()
+                self.bookmarks = self.realm.objects(BookmarkItem.self).map({$0})
+                let item = results[indexPath.row]
+                let temp: BookmarkItem = {
+                    let temp1 = BookmarkItem()
+                    temp1.id = item.id
+                    temp1.desc = item.desc
+                    temp1.image = item.image
+                    temp1.url = item.url
+                    temp1.title = item.title
+                    return temp1
+                }()
+                let count = self.bookmarks.count
+                for i in 0..<count{
+                    if self.bookmarks[i].url == temp.url && self.bookmarks[i].id == temp.id{
+                        self.showToast(controller: self, message: "Bookmark exists!", seconds: 1)
+                        completionHandler(true)
+                        return
+                    }
+                }
+                self.realm.beginWrite()
+                self.realm.add(temp)
+                try! self.realm.commitWrite()
+                
+                self.showToast(controller: self, message: "Bookmarked!", seconds: 1)
+                completionHandler(true)
+            }
             
         }
         deleteAction.image = UIImage(systemName: "bookmark")
         deleteAction.backgroundColor = .systemGreen
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         return configuration
+            
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return scrollDatas.count
@@ -318,6 +393,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = collectionView.cellForItem(at: indexPath) as! Cell
         
         if cell.textLabel.text == "Headlines India"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
             self.title = "Headlines India"
             datas.removeAll()
             self.tableView.reloadData()
@@ -325,6 +403,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.getData(source: defURL)
         }
         if cell.textLabel.text == "Headlines US"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
             self.title = "Headlines US"
             datas.removeAll()
             self.tableView.reloadData()
@@ -332,6 +413,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.getData(source: defURL)
         }
         if cell.textLabel.text == "India Business Headlines"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
             self.title = "India Business Headlines"
             datas.removeAll()
             self.tableView.reloadData()
@@ -339,6 +423,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.getData(source: defURL)
         }
         if cell.textLabel.text == "Hacker News"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
             self.title = "Hacker News"
             datas.removeAll()
             self.tableView.reloadData()
@@ -346,6 +433,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.getHack(source: defURL)
         }
         if cell.textLabel.text == "Tech Scrape"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
             self.title = "Tech Scrape"
             datas.removeAll()
             self.tableView.reloadData()

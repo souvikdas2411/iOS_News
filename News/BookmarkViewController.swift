@@ -71,6 +71,7 @@ class BookmarkViewController: UIViewController, UITableViewDelegate, UITableView
     }
     func refresh(){
         data = realm.objects(BookmarkItem.self).map({$0})
+        data.reverse()
         table.reloadData()
     }
 
