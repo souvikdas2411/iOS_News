@@ -223,7 +223,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if hasFetched{
-//            hasFetched = false
             let item = results[indexPath.row].url
             guard let vc = storyboard?.instantiateViewController(identifier: "viewer") as? ViewerViewController else {
                 return
