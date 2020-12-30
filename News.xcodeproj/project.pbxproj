@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F316B9A259C63CF00355B89 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 4F316B99259C63CF00355B89 /* Realm */; };
+		4F316B9C259C63CF00355B89 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F316B9B259C63CF00355B89 /* RealmSwift */; };
+		4F316B9F259C6E5100355B89 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F316B9E259C6E5100355B89 /* BookmarkViewController.swift */; };
 		4FC4DE92259B9CB000935688 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC4DE91259B9CB000935688 /* Cell.swift */; };
 		4FC5D99C25990E1B00C09715 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC5D99B25990E1B00C09715 /* AppDelegate.swift */; };
 		4FC5D99E25990E1B00C09715 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC5D99D25990E1B00C09715 /* SceneDelegate.swift */; };
@@ -21,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F316B9E259C6E5100355B89 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		4FC4DE91259B9CB000935688 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		4FC5D99825990E1B00C09715 /* News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = News.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC5D99B25990E1B00C09715 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +45,8 @@
 			files = (
 				4FC5D9BA25990F0600C09715 /* SDWebImage in Frameworks */,
 				4FC5D9DE2599CB0600C09715 /* JGProgressHUD in Frameworks */,
+				4F316B9A259C63CF00355B89 /* Realm in Frameworks */,
+				4F316B9C259C63CF00355B89 /* RealmSwift in Frameworks */,
 				4FC5D9B425990E7400C09715 /* SwiftyJSON in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,6 +84,7 @@
 				4FC5D9A625990E1C00C09715 /* LaunchScreen.storyboard */,
 				4FC5D9A925990E1C00C09715 /* Info.plist */,
 				4FC4DE91259B9CB000935688 /* Cell.swift */,
+				4F316B9E259C6E5100355B89 /* BookmarkViewController.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -109,6 +116,8 @@
 				4FC5D9B325990E7400C09715 /* SwiftyJSON */,
 				4FC5D9B925990F0600C09715 /* SDWebImage */,
 				4FC5D9DD2599CB0600C09715 /* JGProgressHUD */,
+				4F316B99259C63CF00355B89 /* Realm */,
+				4F316B9B259C63CF00355B89 /* RealmSwift */,
 			);
 			productName = News;
 			productReference = 4FC5D99825990E1B00C09715 /* News.app */;
@@ -142,6 +151,7 @@
 				4FC5D9B625990EEC00C09715 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				4FC5D9DC2599CB0600C09715 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 				4FC5D9E0259B09AE00C09715 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
+				4F316B98259C63CF00355B89 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = 4FC5D99925990E1B00C09715 /* Products */;
 			projectDirPath = "";
@@ -174,6 +184,7 @@
 				4FC5D99C25990E1B00C09715 /* AppDelegate.swift in Sources */,
 				4FC4DE92259B9CB000935688 /* Cell.swift in Sources */,
 				4FC5D9DA2599251F00C09715 /* ViewerViewController.swift in Sources */,
+				4F316B9F259C6E5100355B89 /* BookmarkViewController.swift in Sources */,
 				4FC5D99E25990E1B00C09715 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -384,6 +395,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4F316B98259C63CF00355B89 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.5.0;
+			};
+		};
 		4FC5D9B225990E7400C09715 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -419,6 +438,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4F316B99259C63CF00355B89 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F316B98259C63CF00355B89 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		4F316B9B259C63CF00355B89 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F316B98259C63CF00355B89 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
 		4FC5D9B325990E7400C09715 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4FC5D9B225990E7400C09715 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
