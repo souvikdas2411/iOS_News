@@ -121,9 +121,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         navigationController?.pushViewController(vc, animated: true)
     }
-    //    @IBAction func didTapSources(){
-    //        presentActionSheet()
-    //    }
     func getData(source: String){
         let url = URL(string: source)!
         let session = URLSession(configuration: .default)
@@ -255,8 +252,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     return
                 }
             }
-//            print(self.bookmarks.count)
-
+            self.realm.beginWrite()
+            self.realm.add(temp)
+            try! self.realm.commitWrite()
+            
+            self.showToast(controller: self, message: "Bookmarked!", seconds: 1)
+            completionHandler(true)
+            
+        }
+        deleteAction.image = UIImage(systemName: "bookmark")
+        deleteAction.backgroundColor = .systemGreen
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
+    }
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { (_, _, completionHandler) in
+            self.bookmarks.removeAll()
+            self.bookmarks = self.realm.objects(BookmarkItem.self).map({$0})
+            let item = datas[indexPath.row]
+            let temp: BookmarkItem = {
+                let temp1 = BookmarkItem()
+                temp1.id = item.id
+                temp1.desc = item.desc
+                temp1.image = item.image
+                temp1.url = item.url
+                temp1.title = item.title
+                return temp1
+            }()
+            let count = self.bookmarks.count
+            for i in 0..<count{
+                if self.bookmarks[i].url == temp.url && self.bookmarks[i].id == temp.id{
+                    self.showToast(controller: self, message: "Bookmark exists!", seconds: 1)
+                    completionHandler(true)
+                    return
+                }
+            }
             self.realm.beginWrite()
             self.realm.add(temp)
             try! self.realm.commitWrite()
@@ -275,6 +305,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        hasFetched = false
+        tableView.reloadData()
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellC", for: indexPath) as! Cell
         cell.layer.cornerRadius = 18.0
         cell.layer.borderWidth = 1.0
@@ -320,6 +352,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             defURL = "https://newsapi.org/v2/everything?domains=thenextweb.com&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
             self.getData(source: defURL)
         }
+//        if cell.textLabel.text == "Covid Scrape"{
+//            self.title = "Covid Scrape"
+//            datas.removeAll()
+//            self.tableView.reloadData()
+//            defURL = "https://newsapi.org/v2/everything?q=corona&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+//            self.getData(source: defURL)
+//        }
+        
         
     }
 }
@@ -366,7 +406,6 @@ extension ViewController: UISearchBarDelegate {
         alert.addAction(UIAlertAction(title: NSLocalizedString("Okay", comment: ""),
                                       style: .cancel,
                                       handler: nil))
-        //        hudC.dismiss()
         controller.present(alert, animated: true, completion: nil)
         
     }
@@ -391,7 +430,6 @@ extension ViewController: UISearchBarDelegate {
                 for i in json[]{
                     DispatchQueue.main.async {
                         self.showCorona(controller: self, message: "COVID-19 Confirmed- \(i.1["confirmed"])/ Deaths- \(i.1["deaths"])/ Recovered- \(i.1["recovered"])")
-                        //self.label.text = "COVID-19 Confirmed- \(i.1["confirmed"])/ Deaths- \(i.1["deaths"])/ Recovered- \(i.1["recovered"])"
                     }
                 }
                 

@@ -16,7 +16,10 @@ class BookmarkViewController: UIViewController, UITableViewDelegate, UITableView
     private let realm = try! Realm()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         data = realm.objects(BookmarkItem.self).map({$0})
+//        data.sort {($0.id > $1.id)}
+        data.reverse()
         table.delegate = self
         table.dataSource = self
     }
