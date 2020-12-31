@@ -53,7 +53,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         self.title = "Headlines India"
         defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
         getData(source: defURL)
@@ -75,8 +75,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         ///DARK MODE PROGRAMATICALLY
 //        self.overrideUserInterfaceStyle = .dark
         
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .medium
+        dateFormatter.dateStyle = .full
+//        dateFormatter.timeStyle = .medium
         Timer.scheduledTimer(timeInterval: 1, target: self, selector:"updateClock", userInfo: nil, repeats: true)
         
         monitor.pathUpdateHandler = { path in
@@ -174,7 +174,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     }
                     let hackJson = try! JSON(data: hackData!)
                     let title = hackJson["title"].stringValue
-                    let descriiption = hackJson["by"].stringValue
+                    //description changed from by to url
+                    let descriiption = hackJson["url"].stringValue
                     let url = hackJson["url"].stringValue
                     let hackId = hackJson["time"].stringValue
                     DispatchQueue.main.async {
@@ -379,6 +380,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return configuration
             
     }
+    // Create a standard header that includes the returned text.
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection
+//                                section: Int) -> String? {
+//       return "Header \(section)"
+//    }
+
+    // Create a standard footer that includes the returned text.
+//    func tableView(_ tableView: UITableView, titleForFooterInSection
+//                                section: Int) -> String? {
+//       return "Footer \(section)"
+//    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return scrollDatas.count
     }
@@ -467,6 +479,7 @@ extension ViewController: UISearchBarDelegate {
             tableView.reloadData()
             return
         }
+        
         
         searchBar.resignFirstResponder()
         results.removeAll()
