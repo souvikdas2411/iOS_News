@@ -72,6 +72,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
+        ///DARK MODE PROGRAMATICALLY
+//        self.overrideUserInterfaceStyle = .dark
+        
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .medium
         Timer.scheduledTimer(timeInterval: 1, target: self, selector:"updateClock", userInfo: nil, repeats: true)
@@ -206,14 +209,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.textLabel?.text = results[indexPath.row].title
             cell.detailTextLabel?.numberOfLines = 0
             cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+            cell.detailTextLabel?.textColor = .darkGray
             cell.detailTextLabel?.text = results[indexPath.row].desc
             return cell
         }
+        let url = URL(string: datas[indexPath.row].image)
+//        cell.imageView?.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+//        cell.imageView?.sd_setImage(with: url, completed: nil)
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.lineBreakMode = .byWordWrapping
         cell.textLabel?.text = datas[indexPath.row].title
         cell.detailTextLabel?.numberOfLines = 0
         cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+        cell.detailTextLabel?.textColor = .darkGray
         cell.detailTextLabel?.text = datas[indexPath.row].desc
         return cell
     }

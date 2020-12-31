@@ -64,6 +64,7 @@ class BookmarkViewController: UIViewController, UITableViewDelegate, UITableView
         cell.textLabel?.text = i
         cell.detailTextLabel?.numberOfLines = 0
         cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+        cell.detailTextLabel?.textColor = .darkGray
         cell.detailTextLabel?.text = d
         
         return cell
