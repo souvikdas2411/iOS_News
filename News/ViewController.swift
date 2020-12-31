@@ -226,7 +226,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return cell
         }
         let url = URL(string: datas[indexPath.row].image)
-//        cell.imageView?.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 //        cell.imageView?.sd_setImage(with: url, completed: nil)
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.lineBreakMode = .byWordWrapping
@@ -423,7 +422,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! Cell
 
-
+        //Hardcoded this part. Need an alternative
         if cell.textLabel.text == "Headlines Google"{
             hasFetched = false
             searchBar.text = ""
