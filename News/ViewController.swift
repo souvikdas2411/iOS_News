@@ -31,7 +31,7 @@ var datas = [dataType]()
 var results = [dataType]()
 var sel = [Cell]()
 var defURL = ""
-var scrollDatas = ["Headlines Google","Headlines India","Headlines US","India Business Headlines","Hacker News","Tech Scrape"]
+var scrollDatas = ["Headlines Google","Headlines India","Headlines US","India Business Headlines","Hacker News Best","Hacker News New","Hacker News Top","Hacker News Show","Hacker News Jobs","Tech Scrape"]
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource{
     
     var bookmarks = [BookmarkItem]()
@@ -241,6 +241,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.deselectRow(at: indexPath, animated: true)
         if hasFetched{
             let item = results[indexPath.row].url
+            if item == ""{
+                return
+            }
             guard let vc = storyboard?.instantiateViewController(identifier: "viewer") as? ViewerViewController else {
                 return
             }
@@ -250,6 +253,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         else{
             let item = datas[indexPath.row].url
+            if item == ""{
+                brokenLink(controller: self, message: "Oops!Something went wrong.", seconds: 1)
+                return
+            }
             guard let vc = storyboard?.instantiateViewController(identifier: "viewer") as? ViewerViewController else {
                 return
             }
@@ -457,14 +464,54 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             defURL = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
             self.getData(source: defURL)
         }
-        if cell.textLabel.text == "Hacker News"{
+        if cell.textLabel.text == "Hacker News Best"{
             hasFetched = false
             searchBar.text = ""
             searchBar.resignFirstResponder()
-            self.title = "Hacker News"
+            self.title = "HackerNews Best"
             datas.removeAll()
             self.tableView.reloadData()
             defURL = "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"
+            self.getHack(source: defURL)
+        }
+        if cell.textLabel.text == "Hacker News Top"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+            self.title = "HackerNews Top"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
+            self.getHack(source: defURL)
+        }
+        if cell.textLabel.text == "Hacker News New"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+            self.title = "HackerNews New"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty"
+            self.getHack(source: defURL)
+        }
+        if cell.textLabel.text == "Hacker News Show"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+            self.title = "HackerNews Show"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://hacker-news.firebaseio.com/v0/showstories.json?print=pretty"
+            self.getHack(source: defURL)
+        }
+        if cell.textLabel.text == "Hacker News Jobs"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+            self.title = "HackerNews Jobs"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty"
             self.getHack(source: defURL)
         }
         if cell.textLabel.text == "Tech Scrape"{
@@ -656,6 +703,13 @@ extension ViewController: UISearchBarDelegate {
     //
     //        present(actionSheet, animated: true)
     //    }
+    func brokenLink(controller: UIViewController, message: String, seconds: Double){
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        controller.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds){
+            alert.dismiss(animated: true, completion: nil)
+        }
+    }
 }
 
 

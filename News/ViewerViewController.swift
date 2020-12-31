@@ -24,8 +24,10 @@ class ViewerViewController: UIViewController, WKUIDelegate {
         super.viewDidLoad()
         
         let url = URL(string: myURL)!
+        
         let myRequest = URLRequest(url: url)
         webView.load(myRequest)
+        
         
     }
     @IBAction func didTapShare(){
@@ -36,7 +38,7 @@ class ViewerViewController: UIViewController, WKUIDelegate {
         let secondActivityItem : NSURL = NSURL(string: myURL)!
         
         // If you want to use an image
-//        let image : UIImage = UIImage(named: "your-image-name")!
+        //        let image : UIImage = UIImage(named: "your-image-name")!
         let activityViewController : UIActivityViewController = UIActivityViewController(
             activityItems: [firstActivityItem, secondActivityItem], applicationActivities: nil)
         

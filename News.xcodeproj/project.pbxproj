@@ -20,7 +20,6 @@
 		4FC5D9B425990E7400C09715 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC5D9B325990E7400C09715 /* SwiftyJSON */; };
 		4FC5D9BA25990F0600C09715 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC5D9B925990F0600C09715 /* SDWebImage */; };
 		4FC5D9DA2599251F00C09715 /* ViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC5D9D92599251F00C09715 /* ViewerViewController.swift */; };
-		4FC5D9DE2599CB0600C09715 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC5D9DD2599CB0600C09715 /* JGProgressHUD */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,7 +43,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FC5D9BA25990F0600C09715 /* SDWebImage in Frameworks */,
-				4FC5D9DE2599CB0600C09715 /* JGProgressHUD in Frameworks */,
 				4F316B9A259C63CF00355B89 /* Realm in Frameworks */,
 				4F316B9C259C63CF00355B89 /* RealmSwift in Frameworks */,
 				4FC5D9B425990E7400C09715 /* SwiftyJSON in Frameworks */,
@@ -115,7 +113,6 @@
 			packageProductDependencies = (
 				4FC5D9B325990E7400C09715 /* SwiftyJSON */,
 				4FC5D9B925990F0600C09715 /* SDWebImage */,
-				4FC5D9DD2599CB0600C09715 /* JGProgressHUD */,
 				4F316B99259C63CF00355B89 /* Realm */,
 				4F316B9B259C63CF00355B89 /* RealmSwift */,
 			);
@@ -457,11 +454,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FC5D9B625990EEC00C09715 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
-		};
-		4FC5D9DD2599CB0600C09715 /* JGProgressHUD */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4FC5D9DC2599CB0600C09715 /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
-			productName = JGProgressHUD;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
