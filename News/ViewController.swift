@@ -30,7 +30,7 @@ var datas = [dataType]()
 var results = [dataType]()
 var sel = [Cell]()
 var defURL = ""
-var scrollDatas = ["Headlines India","Headlines US","India Business Headlines","Hacker News","Tech Scrape"]
+var scrollDatas = ["Headlines Google","Headlines India","Headlines US","India Business Headlines","Hacker News","Tech Scrape"]
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource{
     
     var bookmarks = [BookmarkItem]()
@@ -54,8 +54,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        self.title = "Headlines India"
-        defURL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+        self.title = "Headlines Google"
+        defURL = "https://newsapi.org/v2/top-headlines?sources=google-news-in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
         getData(source: defURL)
         
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -406,8 +406,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! Cell
         
+        
+        if cell.textLabel.text == "Headlines Google"{
+            hasFetched = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+            self.title = "Headlines Google"
+            datas.removeAll()
+            self.tableView.reloadData()
+            defURL = "https://newsapi.org/v2/top-headlines?sources=google-news-in&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+            self.getData(source: defURL)
+        }
         if cell.textLabel.text == "Headlines India"{
-            
             hasFetched = false
             searchBar.text = ""
             searchBar.resignFirstResponder()

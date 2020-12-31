@@ -41,6 +41,13 @@ class BookmarkViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func didTapElf(){
         updateElf()
     }
+    @IBAction func didTapDeleteAll(){
+        let realm = try! Realm()
+        try! realm.write {
+            realm.deleteAll()
+        }
+        refresh()
+    }
     func updateElf(){
         UIView.animate(withDuration: 2.0) { () -> Void in
             self.elf.transform = CGAffineTransform(rotationAngle: CGFloat.pi)

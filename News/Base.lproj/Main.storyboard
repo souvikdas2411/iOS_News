@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" text="" placeholder="Search keywords " translatesAutoresizingMaskIntoConstraints="NO" id="TzI-6w-naT">
-                                <rect key="frame" x="0.0" y="140" width="361" height="56"/>
+                                <rect key="frame" x="0.0" y="140" width="308" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <scopeButtonTitles>
                                     <string>Title</string>
@@ -111,6 +111,18 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EL6-lU-wIW">
+                                <rect key="frame" x="308" y="140" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="byH-Bw-MEB"/>
+                                    <constraint firstAttribute="width" constant="48" id="vgW-Xp-8tD"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemGreenColor"/>
+                                <state key="normal" image="bookmark8"/>
+                                <connections>
+                                    <action selector="didTapBookmark" destination="BYZ-38-t0r" eventType="touchUpInside" id="NDY-sB-YmQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -121,9 +133,11 @@
                             <constraint firstItem="TzI-6w-naT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="FiG-gn-pge"/>
                             <constraint firstItem="dwH-PL-9t2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="PaK-2m-MJF"/>
                             <constraint firstItem="e2z-6H-V25" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Sw7-TK-edk"/>
-                            <constraint firstItem="dwH-PL-9t2" firstAttribute="leading" secondItem="TzI-6w-naT" secondAttribute="trailing" id="WIr-gG-uDd"/>
                             <constraint firstAttribute="bottom" secondItem="e2z-6H-V25" secondAttribute="bottom" id="WmL-ke-6Rp"/>
+                            <constraint firstItem="EL6-lU-wIW" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="aQ9-d1-bnI"/>
                             <constraint firstItem="uRC-oY-9kJ" firstAttribute="top" secondItem="TzI-6w-naT" secondAttribute="bottom" id="ehV-iA-lHW"/>
+                            <constraint firstItem="dwH-PL-9t2" firstAttribute="leading" secondItem="EL6-lU-wIW" secondAttribute="trailing" constant="5" id="jap-Kp-9Xe"/>
+                            <constraint firstItem="EL6-lU-wIW" firstAttribute="leading" secondItem="TzI-6w-naT" secondAttribute="trailing" id="kd1-xt-x1j"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dwH-PL-9t2" secondAttribute="trailing" constant="5" id="oid-g7-Cxi"/>
                             <constraint firstItem="e2z-6H-V25" firstAttribute="top" secondItem="uRC-oY-9kJ" secondAttribute="bottom" id="rg3-n5-ywC"/>
                             <constraint firstItem="uRC-oY-9kJ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="wb3-AF-nIm"/>
@@ -131,11 +145,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="News" id="5cF-qL-Daq">
                         <barButtonItem key="backBarButtonItem" title=" " id="45k-9z-NTS"/>
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="bookmark" catalog="system" id="JEu-Ov-7JF">
-                            <connections>
-                                <action selector="didTapBookmark" destination="BYZ-38-t0r" id="rPt-oB-5Ok"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="TNh-TS-1VF">
                             <color key="tintColor" systemColor="systemGrayColor"/>
                         </barButtonItem>
@@ -253,7 +262,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Bookmarks" id="ilG-AO-KGM">
                         <barButtonItem key="backBarButtonItem" title=" " id="x8h-fR-JHC"/>
-                        <barButtonItem key="rightBarButtonItem" title="Export" id="BRx-xm-lqt"/>
+                        <barButtonItem key="rightBarButtonItem" title="Delete all" id="BRx-xm-lqt">
+                            <connections>
+                                <action selector="didTapDeleteAll" destination="23w-9S-3K8" id="n9d-WU-0D2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="elf" destination="h3L-DY-8Mf" id="3FY-wt-RUh"/>
@@ -321,8 +334,8 @@
     </scenes>
     <resources>
         <image name="arrowshape.turn.up.right.circle" catalog="system" width="128" height="121"/>
-        <image name="bookmark" catalog="system" width="112" height="128"/>
         <image name="bookmark.fill" catalog="system" width="112" height="128"/>
+        <image name="bookmark8" width="32" height="32"/>
         <image name="corona" width="48" height="48"/>
         <image name="dot.circle" catalog="system" width="128" height="121"/>
         <image name="launch" width="50" height="50"/>
