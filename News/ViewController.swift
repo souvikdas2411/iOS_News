@@ -8,7 +8,6 @@
 import UIKit
 import SwiftyJSON
 import SDWebImage
-import JGProgressHUD
 import Network
 import RealmSwift
 
@@ -26,6 +25,8 @@ class BookmarkItem: Object{
     @objc dynamic var url: String = ""
     @objc dynamic var image: String = ""
 }
+//prevIndex not in use
+var prevIndex = IndexPath()
 var datas = [dataType]()
 var results = [dataType]()
 var sel = [Cell]()
@@ -35,6 +36,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var bookmarks = [BookmarkItem]()
     
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var timeLabel: UIBarButtonItem!
@@ -42,7 +44,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var corona: UIButton!
     
     private var hasFetched = false
-    let hud = JGProgressHUD()
     var refreshControl = UIRefreshControl()
     
     private let realm = try! Realm()
@@ -76,8 +77,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        self.overrideUserInterfaceStyle = .dark
         
         dateFormatter.dateStyle = .full
-//        dateFormatter.timeStyle = .medium
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector:"updateClock", userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector:#selector(self.updateClock), userInfo: nil, repeats: true)
         
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
@@ -122,10 +122,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         navigationController?.pushViewController(vc, animated: true)
     }
     func getData(source: String){
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         let url = URL(string: source)!
         let session = URLSession(configuration: .default)
         session.dataTask(with: url){ (data, _, error) in
             if error != nil{
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
                 print(error?.localizedDescription)
                 return
             }
@@ -144,6 +148,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self.tableView.delegate = self
                     self.tableView.dataSource = self
                     self.tableView.reloadData()
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
                     self.refreshControl.endRefreshing()
                 }
             }
@@ -152,12 +158,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }.resume()
     }
     func getHack(source: String){
-        hud.textLabel.text = "Loading"
-        hud.show(in: self.view)
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         let url = URL(string: source)!
         let session = URLSession(configuration: .default)
         session.dataTask(with: url){ (data, _, error) in
             if error != nil{
+                self.activityIndicator.isHidden = false
+                self.activityIndicator.startAnimating()
                 print(error?.localizedDescription)
                 return
             }
@@ -169,6 +177,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let hackSession = URLSession(configuration: .default)
                 hackSession.dataTask(with: hackUrl) {(hackData,_,hackError) in
                     if hackError != nil{
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
                         print(hackError?.localizedDescription)
                         return
                     }
@@ -184,13 +194,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.tableView.delegate = self
                         self.tableView.dataSource = self
                         self.tableView.reloadData()
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
                         self.refreshControl.endRefreshing()
                     }
                     
                 }.resume()
             }
             
-            self.hud.dismiss()
         }.resume()
     }
     
@@ -394,19 +405,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return scrollDatas.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellC", for: indexPath) as! Cell
         cell.layer.cornerRadius = 18.0
         cell.layer.borderWidth = 1.0
-        cell.layer.borderColor = UIColor.red.cgColor
+        cell.layer.borderColor = UIColor.systemBlue.cgColor
         cell.textLabel.text = scrollDatas[indexPath.row]
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! Cell
-        
-        
+
+
         if cell.textLabel.text == "Headlines Google"{
             hasFetched = false
             searchBar.text = ""
@@ -464,7 +474,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.title = "Tech Scrape"
             datas.removeAll()
             self.tableView.reloadData()
-            defURL = "https://newsapi.org/v2/everything?domains=thenextweb.com&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
+            defURL = "https://newsapi.org/v2/everything?domains=thenextweb.com,wired.com,tech2.com&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
             self.getData(source: defURL)
         }
 //        if cell.textLabel.text == "Covid Scrape"{
@@ -474,8 +484,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //            defURL = "https://newsapi.org/v2/everything?q=corona&sortBy=popularity&apiKey=a086df1105b44d51bc72a98d7ca0bf19"
 //            self.getData(source: defURL)
 //        }
-        
-        
+    
     }
 }
 
