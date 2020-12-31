@@ -376,12 +376,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        hasFetched = false
-        tableView.reloadData()
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellC", for: indexPath) as! Cell
         cell.layer.cornerRadius = 18.0
         cell.layer.borderWidth = 1.0
-        cell.layer.borderColor = UIColor.lightGray.cgColor
+        cell.layer.borderColor = UIColor.red.cgColor
         cell.textLabel.text = scrollDatas[indexPath.row]
         return cell
     }
@@ -389,6 +387,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = collectionView.cellForItem(at: indexPath) as! Cell
         
         if cell.textLabel.text == "Headlines India"{
+            
             hasFetched = false
             searchBar.text = ""
             searchBar.resignFirstResponder()

@@ -50,15 +50,16 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CellC" id="sjF-7D-4e5" customClass="Cell" customModule="News" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="7" width="68" height="34"/>
+                                        <rect key="frame" x="0.0" y="7" width="69" height="34"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gNn-YU-Tq3">
-                                            <rect key="frame" x="0.0" y="0.0" width="68" height="34"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="69" height="34"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-UP-bEc">
-                                                    <rect key="frame" x="10" y="5" width="48" height="24"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <rect key="frame" x="10" y="5" width="49" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -69,7 +70,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="w7W-UP-bEc" secondAttribute="trailing" constant="10" id="uQ2-ZY-Qcr"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <color key="backgroundColor" systemColor="systemRedColor"/>
                                         <connections>
                                             <outlet property="textLabel" destination="w7W-UP-bEc" id="RiB-Ue-fW7"/>
                                         </connections>
@@ -177,7 +178,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Seach keywords" translatesAutoresizingMaskIntoConstraints="NO" id="ANz-TS-Kn7">
-                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="88" width="366" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="geo-r1-HN4">
@@ -210,27 +211,43 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h3L-DY-8Mf">
+                                <rect key="frame" x="366" y="88" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="oa6-Vy-PPE"/>
+                                    <constraint firstAttribute="width" constant="48" id="rtj-vu-Hwr"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="launch"/>
+                                <connections>
+                                    <action selector="didTapElf" destination="23w-9S-3K8" eventType="touchUpInside" id="0Ns-fC-Msm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6SG-9B-35X"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ANz-TS-Kn7" firstAttribute="top" secondItem="6SG-9B-35X" secondAttribute="top" id="CxZ-eE-jjz"/>
-                            <constraint firstItem="geo-r1-HN4" firstAttribute="top" secondItem="ANz-TS-Kn7" secondAttribute="bottom" id="DfC-ez-XhJ"/>
-                            <constraint firstItem="ANz-TS-Kn7" firstAttribute="trailing" secondItem="6SG-9B-35X" secondAttribute="trailing" id="Ken-ML-vaO"/>
-                            <constraint firstAttribute="bottom" secondItem="geo-r1-HN4" secondAttribute="bottom" id="X5U-af-JFH"/>
-                            <constraint firstItem="geo-r1-HN4" firstAttribute="trailing" secondItem="6SG-9B-35X" secondAttribute="trailing" id="jdy-8t-4m0"/>
-                            <constraint firstItem="ANz-TS-Kn7" firstAttribute="leading" secondItem="6SG-9B-35X" secondAttribute="leading" id="rPU-e5-rhI"/>
-                            <constraint firstItem="geo-r1-HN4" firstAttribute="leading" secondItem="6SG-9B-35X" secondAttribute="leading" id="rca-LE-TxP"/>
+                            <constraint firstItem="h3L-DY-8Mf" firstAttribute="top" secondItem="6SG-9B-35X" secondAttribute="top" id="3hC-Mm-Dig"/>
+                            <constraint firstItem="ANz-TS-Kn7" firstAttribute="leading" secondItem="6SG-9B-35X" secondAttribute="leading" id="4ky-CJ-X1K"/>
+                            <constraint firstItem="ANz-TS-Kn7" firstAttribute="top" secondItem="6SG-9B-35X" secondAttribute="top" id="8V8-LY-xyP"/>
+                            <constraint firstItem="geo-r1-HN4" firstAttribute="trailing" secondItem="6SG-9B-35X" secondAttribute="trailing" id="BRe-Kr-YGU"/>
+                            <constraint firstAttribute="trailing" secondItem="h3L-DY-8Mf" secondAttribute="trailing" id="IsW-gp-7sp"/>
+                            <constraint firstItem="geo-r1-HN4" firstAttribute="top" secondItem="ANz-TS-Kn7" secondAttribute="bottom" id="Kuv-QR-I3z"/>
+                            <constraint firstAttribute="bottom" secondItem="geo-r1-HN4" secondAttribute="bottom" id="Qmc-VN-ZQz"/>
+                            <constraint firstItem="h3L-DY-8Mf" firstAttribute="leading" secondItem="ANz-TS-Kn7" secondAttribute="trailing" id="SGB-XC-d1E"/>
+                            <constraint firstItem="geo-r1-HN4" firstAttribute="leading" secondItem="6SG-9B-35X" secondAttribute="leading" id="SPH-h2-NrI"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Bookmarks" id="ilG-AO-KGM"/>
+                    <navigationItem key="navigationItem" title="Bookmarks" id="ilG-AO-KGM">
+                        <barButtonItem key="backBarButtonItem" title=" " id="x8h-fR-JHC"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="elf" destination="h3L-DY-8Mf" id="3FY-wt-RUh"/>
                         <outlet property="table" destination="geo-r1-HN4" id="L5a-fp-4n0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dbm-xK-oJV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5032" y="70"/>
+            <point key="canvasLocation" x="5031.884057971015" y="69.642857142857139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SaX-ha-tc5">
@@ -291,14 +308,15 @@
         <image name="arrowshape.turn.up.right.circle" catalog="system" width="128" height="121"/>
         <image name="bookmark" catalog="system" width="112" height="128"/>
         <image name="corona" width="48" height="48"/>
+        <image name="launch" width="50" height="50"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

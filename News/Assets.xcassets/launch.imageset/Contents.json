@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icons8-news-96.png",
+      "filename" : "icons8-elf-100.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icons8-news-97.png",
+      "filename" : "icons8-elf-101.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icons8-news-98.png",
+      "filename" : "icons8-elf-102.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

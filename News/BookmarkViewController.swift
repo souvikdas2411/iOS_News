@@ -11,6 +11,7 @@ import RealmSwift
 class BookmarkViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var table : UITableView!
+    @IBOutlet var elf: UIButton!
     
     private var data = [BookmarkItem]()
     private let realm = try! Realm()
@@ -18,12 +19,37 @@ class BookmarkViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         
         data = realm.objects(BookmarkItem.self).map({$0})
-//        data.sort {($0.id > $1.id)}
         data.reverse()
-        table.delegate = self
-        table.dataSource = self
+        if data.isEmpty{
+            table.isHidden = true
+            showLabel(controller: self, message: "Swipe on news to bookmark them!")
+        }
+        else{
+            table.isHidden = false
+            table.delegate = self
+            table.dataSource = self
+        }
     }
-    
+    func showLabel(controller: UIViewController, message: String){
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Okay", comment: ""),
+                                      style: .cancel,
+                                      handler: nil))
+        controller.present(alert, animated: true, completion: nil)
+        
+    }
+    @IBAction func didTapElf(){
+        updateElf()
+    }
+    func updateElf(){
+        UIView.animate(withDuration: 2.0) { () -> Void in
+            self.elf.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        }
+        
+        UIView.animate(withDuration: 2.0, delay: 0.5, options: UIView.AnimationOptions.curveEaseIn, animations: { () -> Void in
+            self.elf.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
+        }, completion: nil)
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -56,18 +82,31 @@ class BookmarkViewController: UIViewController, UITableViewDelegate, UITableView
 //        present(vc, animated: true, completion: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        
-        return .delete
-    }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
-        if editingStyle == .delete{
-            let item = data[indexPath.row]
-            realm.beginWrite()
-            realm.delete(item)
-            try! realm.commitWrite()
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+            let item = self.data[indexPath.row]
+            self.realm.beginWrite()
+            self.realm.delete(item)
+            try! self.realm.commitWrite()
             self.refresh()
         }
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = .systemRed
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
+    }
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+            let item = self.data[indexPath.row]
+            self.realm.beginWrite()
+            self.realm.delete(item)
+            try! self.realm.commitWrite()
+            self.refresh()
+        }
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = .systemRed
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
     }
     func refresh(){
         data = realm.objects(BookmarkItem.self).map({$0})
