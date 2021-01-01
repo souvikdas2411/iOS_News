@@ -82,6 +82,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 //self.refresh(self)
+                self.showToast(controller: self, message: "Connection restored!", seconds: 1)
             } else {
                 self.showToast(controller: self, message: "No internet connection!", seconds: 3)
             }
