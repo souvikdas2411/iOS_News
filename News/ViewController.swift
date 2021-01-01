@@ -81,7 +81,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
-                
+                //self.refresh(self)
             } else {
                 self.showToast(controller: self, message: "No internet connection!", seconds: 3)
             }
@@ -96,7 +96,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if defURL == "https://hacker-news.firebaseio.com/v0/beststories.json?print=pretty"{
             getHack(source: defURL)
         }
-        getData(source: defURL)
+        else {
+            getData(source: defURL)
+        }
         
     }
     
