@@ -566,7 +566,7 @@ extension ViewController: UISearchBarDelegate {
    }
    func getCorona(){
        let headers = [
-           "x-rapidapi-key": "cb3b31426dmsh9e8f5509ac874dep19234cjsn368eafc7208f",
+           "x-rapidapi-key": "yourAPIkey",
            "x-rapidapi-host": "covid-19-data.p.rapidapi.com"
        ]
        
